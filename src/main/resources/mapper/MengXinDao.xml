@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Configuration 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.ubang.dao.MengXinDao">
+
+	<!-- 获取校园风景图 -->
+	<select id="getCampusBeauty"
+		resultType="com.ubang.table.Campus"
+		parameterType="com.ubang.table.Pagination"> 
+			select
+				*
+			from 
+				campus_beauty
+			limit
+				#{start},#{space}
+	</select>
+	
+	<select 
+		id="getTest"
+		resultType="com.ubang.table.Test"> 
+			select
+				* 
+			from 
+				test
+	</select>
+	
+	<!-- 获取校园风景图的总数 -->
+	<select 
+		id="getPhotoSum"
+		resultType="int"> 
+			select
+				max(photo_id)
+			from 
+				campus_beauty
+	</select>
+	
+	<!-- 助手问答 -->
+	<select 
+		id="getAnswer"
+		parameterType="java.lang.String"
+		resultType="com.ubang.table.Assistant"> 
+			select
+				*
+			from 
+				ubang_assistant
+			where 
+				question_key
+			like
+				"%"#{question_key}"%"
+	</select>
+	
+	
+	<!-- 获取已解决问题的答案 -->
+	<select 
+		id="getSolveAssistant"
+		parameterType="com.ubang.table.SolveAssistant"
+		resultType="com.ubang.table.Assistant"> 
+			SELECT 
+				solve_assistant.question_key,ubang_assistant.answer_text
+			FROM 
+				solve_assistant
+			INNER JOIN 
+				ubang_assistant
+			WHERE 
+				ubang_assistant.question_key = #{question_key} and solve_assistant.id = #{id};
+	</select>
+	
+	<!-- 获取所有已解决问题的答案 -->
+	<select 
+		id="getSolveAllAssistant"
+		parameterType="int"
+		resultType="java.lang.String"> 
+			SELECT 
+				question_key
+			FROM 
+				solve_assistant
+	</select>
+</mapper>
