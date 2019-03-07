@@ -68,10 +68,40 @@
 	<select 
 		id="getSolveAllAssistant"
 		parameterType="int"
-		resultType="java.lang.String"> 
+		resultType="com.ubang.table.SolveAssistant"> 
 			SELECT 
-				question_key
+				*
 			FROM 
 				solve_assistant
+			where 
+				id = #{id}
+	</select>
+	
+	<!-- 获取所有未解决问题的答案 -->
+	<select 
+		id="getUnSolveAllAssistant"
+		parameterType="int"
+		resultType="com.ubang.table.UnSolveAllAssistant"> 
+			SELECT 
+				*
+			FROM 
+				unsolve_assistant
+			where 
+				id = #{id}
+	</select>
+	
+	<!-- 获取解决为看见问题的答案 -->
+	<select 
+		id="getSolveButNotSee"
+		parameterType="java.lang.String"
+		resultType="com.ubang.table.Assistant"> 
+			select
+				*
+			from 
+				ubang_assistant
+			where 
+				question_key
+			like
+				"%"#{question_key}"%"
 	</select>
 </mapper>

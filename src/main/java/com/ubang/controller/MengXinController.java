@@ -37,7 +37,6 @@ public class MengXinController {
 	public void CampusBeauty(Model model,HttpServletResponse response,String getPagination) throws IOException{
 		response.setContentType("text/html;charset=UTF-8");
 		try {	
-			System.out.println("进入CampusBeauty函数");
 			Pagination pagination = (Pagination) JSONObject.toBean(JSONObject.fromObject(getPagination), Pagination.class);
 			JSONArray json = JSONArray.fromObject(mengXinService.getCampusBeauty(pagination));
 			response.getWriter().print(json+"="+mengXinService.getPhotoSum());
@@ -54,7 +53,6 @@ public class MengXinController {
 	@RequestMapping(value="/Assistant",method=RequestMethod.POST)
 	public void getAnswer(HttpServletResponse response,String question_key,HttpServletRequest request) throws IOException{
 		response.setContentType("text/html;charset=UTF-8");
-		System.out.println("进入getAnswer函数");
 		JSONArray json = JSONArray.fromObject(mengXinService.getAnswer(question_key));
 		System.out.println(json.toString());
 		response.getWriter().print(json);
@@ -72,12 +70,33 @@ public class MengXinController {
 	}
 	
 	//获取所有已解决的问答
-		@RequestMapping(value="/SolveAllAssistant",method=RequestMethod.POST)
-		public void SolveAllAssistant(HttpServletResponse response,String getID) throws IOException{
-			response.setContentType("text/html;charset=UTF-8");
-			System.out.println("进入getSolveAssistant函数");
-			//JSONArray json = JSONArray.fromObject(mengXinService.getSolveAllAssistant(id));
-			System.out.println(mengXinService.getSolveAllAssistant(Integer.parseInt(getID)));
-			response.getWriter().print(mengXinService.getSolveAllAssistant(Integer.parseInt(getID)));
-		}
+	@RequestMapping(value="/SolveAllAssistant",method=RequestMethod.POST)
+	public void SolveAllAssistant(HttpServletResponse response,String getID) throws IOException{
+		response.setContentType("text/html;charset=UTF-8");
+		System.out.println("进入getSolveAssistant函数");
+		JSONArray json = JSONArray.fromObject(mengXinService.getSolveAllAssistant(Integer.parseInt(getID)));
+		System.out.println(json);
+		response.getWriter().print(json);
+	}
+	
+	//获取所有未解决的已解决的问答
+	@RequestMapping(value="/UnSolveAllAssistant",method=RequestMethod.POST)
+	public void UnSolveAllAssistant(HttpServletResponse response,String getID) throws IOException{
+		response.setContentType("text/html;charset=UTF-8");
+		System.out.println("进入getSolveAssistant函数");
+		JSONArray json = JSONArray.fromObject(mengXinService.getUnSolveAllAssistant(Integer.parseInt(getID)));
+		System.out.println(json);
+		response.getWriter().print(json);
+	}
+	
+	//获取所有未解决的已解决的问答
+	@RequestMapping(value="/SolveButNotSee",method=RequestMethod.POST)
+	public void SolveButNotSee(HttpServletResponse response,String getQuestion_key) throws IOException{
+		response.setContentType("text/html;charset=UTF-8");
+		System.out.println("进入getSolveAssistant函数");
+		JSONArray json = JSONArray.fromObject(mengXinService.getSolveButNotSee(getQuestion_key));
+		System.out.println(json);
+		response.getWriter().print(json);
+	}
+		
 }

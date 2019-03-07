@@ -12,6 +12,7 @@ import com.ubang.table.Campus;
 import com.ubang.table.Pagination;
 import com.ubang.table.SolveAssistant;
 import com.ubang.table.Test;
+import com.ubang.table.UnSolveAllAssistant;
 
 @Service
 public class MengXinServiceImp implements MengXinService{
@@ -47,15 +48,27 @@ public class MengXinServiceImp implements MengXinService{
 	}
 
 	@Override
-	public Assistant getSolveAssistant(SolveAssistant solveAssistant) {
+	public List<Assistant> getSolveAssistant(SolveAssistant solveAssistant) {
 		// TODO Auto-generated method stub
 		return mengXinDao.getSolveAssistant(solveAssistant);
 	}
 
 	@Override
-	public List<String> getSolveAllAssistant(int id) {
+	public List<SolveAssistant> getSolveAllAssistant(int id) {
 		// TODO Auto-generated method stub
 		return mengXinDao.getSolveAllAssistant(id);
+	}
+
+	@Override
+	public List<UnSolveAllAssistant> getUnSolveAllAssistant(int id) {
+		// TODO Auto-generated method stub
+		return mengXinDao.getUnSolveAllAssistant(id);
+	}
+
+	@Override
+	public List<Assistant> getSolveButNotSee(String getQuestion_key) {
+		// TODO Auto-generated method stub
+		return mengXinDao.getSolveButNotSee(getQuestion_key);
 	}
 
 	
