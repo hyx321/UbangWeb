@@ -1,4 +1,8 @@
 eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/Jsp/StaffModal/addModal.jsp=UTF-8
+encoding//WebContent/WEB-INF/Jsp/StaffModal/deleteModal.jsp=UTF-8
+encoding//WebContent/WEB-INF/Jsp/StaffModal/updateModal.jsp=UTF-8
+encoding//WebContent/WEB-INF/Jsp/comment/headline.jsp=UTF-8
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/test/java=UTF-8

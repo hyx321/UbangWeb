@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Configuration 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.ubang.dao.UserDao">
+
+	<select 
+		id="UserLogin"
+		parameterType="com.ubang.table.User"
+		resultType="java.lang.String"> 
+			select 
+				password
+			from 
+				ubang_user
+			where
+				phone like #{phone} or nickname like #{nickname}
+	</select>
+
+	<update 
+		id="ForgetPwd"
+		parameterType="com.ubang.table.User"> 
+			update  
+				ubang_user
+			SET  
+				password = #{password}
+			where
+				phone like #{phone}
+	</update>
+	
+	<insert 
+		id="Regiest"
+		parameterType="com.ubang.table.User"> 
+			insert into
+				ubang_user(nickname,password,permission,phone,sex,avatar,name)
+			values (
+				#{nickname},#{password},#{permission},#{phone},#{sex},#{avatar},#{name});
+	</insert>
+	
+	<select 
+		id="CheckUserOnly"
+		parameterType="com.ubang.table.User"
+		resultType="com.ubang.table.User">
+			select 
+				* 
+			from 
+				ubang_user
+			where
+				nickname like #{nickname} or phone like #{phone}
+	</select>
+	
+	<select 
+		id="CheckLogin"
+		parameterType="com.ubang.table.Administor"
+		resultType="com.ubang.table.Administor">
+			select 
+				* 
+			from 
+				ubang_administor
+			where
+				name like #{name} or phone like #{phone} and password like #{password}
+	</select>
+	
+	<select 
+		id="getAllUsers"
+		resultType="com.ubang.table.User">
+			select 
+				* 
+			from 
+				ubang_user
+	</select>
+	
+	
+	<select 
+		id="GetUserAdmin"
+		parameterType="int"
+		resultType="com.ubang.table.User">
+			select 
+				* 
+			from 
+				ubang_user
+			where 
+				id = #{ID}
+	</select>
+	
+	<delete
+		id="DeleteUserAdmin"
+		parameterType="int">
+			delete 
+			from 
+				ubang_user
+			where 
+				id = #{ID}
+	</delete>
+	
+	<update
+		id="UpdateUserAdmin"
+		parameterType="com.ubang.table.User">
+			update 
+				ubang_user
+			set 
+				name = #{name},
+				nickname = #{nickname},
+				password = #{password},
+				phone = #{phone},
+				sex = #{sex}
+			where 
+				id = #{id}
+	</update>
+	
+	<insert
+		id="AddUserAdmin"
+		parameterType="com.ubang.table.User">
+			insert into  
+				ubang_user(
+					name,
+					nickname,
+					password,
+					phone,
+					sex,
+					permission,
+					avatar)
+			values(
+					#{name},
+					#{nickname},
+					#{password},
+					#{phone},
+					#{sex},		
+					#{permission},
+					#{avatar})
+	</insert>
+	
+</mapper>

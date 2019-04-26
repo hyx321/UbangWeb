@@ -1,0 +1,29 @@
+@charset "UTF-8";
+.testDemo{
+	display:none;
+}
+.#result{
+	color:red;
+}
+/* <!-- 表格内容居中 --> */
+.table tbody tr td {
+	vertical-align: middle;
+}
+/* <!-- 文本的位置 --> */
+body {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+div#2{
+position:fixed;
+top:0;
+left:0;
+bottom:0;
+right:0;
+z-index:-1;
+}
+div#2 > img {
+height:100%;
+width:100%;
+border:0;
+}

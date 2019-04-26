@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Configuration 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.ubang.dao.JobDao">
+
+	<!-- 获取城市标签 -->
+	<select 
+		id="getCityTag"
+		resultType="java.lang.String"> 
+			select DISTINCT
+				city
+			from 
+				job
+	</select>
+
+	<!-- 获取月薪标签 -->
+	<select 
+		id="getSalaryTag"
+		resultType="java.lang.String"> 
+			select DISTINCT
+				job_salary
+			from 
+				job
+	</select>
+	
+	<!-- 获取工作经验标签 -->
+	<select 
+		id="getRequireExp"
+		resultType="java.lang.String"> 
+			select DISTINCT
+				job_require_exp
+			from 
+				job
+	</select>
+
+	<!-- 获取学历标签 -->
+	<select 
+		id="getRequireDegree"
+		resultType="java.lang.String"> 
+			select DISTINCT
+				job_require_degree
+			from 
+				job
+	</select>
+	
+	<!-- 获取规模人数标签 -->
+	<select 
+		id="getCompanyNum"
+		resultType="java.lang.String"> 
+			select DISTINCT
+				company_num
+			from 
+				job
+	</select>
+	
+	<!-- 获取公司类型标签 -->
+	<select 
+		id="getCompanyType"
+		resultType="java.lang.String"> 
+			select DISTINCT
+				company_type
+			from 
+				job
+	</select>
+	
+		
+	<!-- 获取招聘信息标签 -->
+	<select 
+		id="getJobInfo"
+		parameterType="com.ubang.table.JobInfoUpdate"
+		resultType="com.ubang.table.Job"> 
+			select 
+				*
+			from 
+				job
+			where 
+				1=1
+				<if test='cityList.length >0 '>
+					and 
+					city in (${cityList})	
+	        	</if>
+	        	<if test="companyNumList.length>0">
+		        	and 
+		        	company_num in (${companyNumList})	
+	        	</if>
+	        	<if test = "companyTypeList.length>0">
+		        	and
+		        	company_type in (${companyTypeList})			    
+	        	</if>
+	        	<if test="expList.length>0">
+	        		and
+		        	job_require_exp in (${expList})			
+		        </if>
+		        <if test="degreeList.length>0">
+		        	and
+		            job_require_degree in (${degreeList})		   
+	        	</if>
+	        limit
+	        	${start},${space}
+				<!-- #{start},#{space}  -->
+	</select>
+</mapper>
