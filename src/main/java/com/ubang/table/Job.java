@@ -1,6 +1,7 @@
 package com.ubang.table;
 
 public class Job {
+	private int id;
 	private String city;
 	private String job_type;
 	private String job_position;
@@ -17,6 +18,7 @@ public class Job {
 	private String company_field;
 	private String company_img;
 	private String company_info;
+	
 	
 	public String getCity() {
 		return city;
@@ -54,12 +56,7 @@ public class Job {
 	public void setJob_place(String job_place) {
 		this.job_place = job_place;
 	}
-	public String getJob_require() {
-		return job_require;
-	}
-	public void setJob_require(String job_require) {
-		this.job_require = job_require;
-	}
+	
 	public String getJob_require_exp() {
 		return job_require_exp;
 	}
@@ -117,13 +114,26 @@ public class Job {
 	}
 	@Override
 	public String toString() {
-		return "{\"city\":\"" + city + "\", \"job_type\":\"" + job_type + "\", \"job_position\":\"" + job_position
-				+ "\", \"job_company\":\"" + job_company + "\", \"job_salary\":\"" + job_salary + "\", \"job_place\":\""
-				+ job_place + "\", \"job_require\":\"" + job_require + "\", \"job_require_exp\":\"" + job_require_exp
-				+ "\", \"job_require_degree\":\"" + job_require_degree + "\", \"job_require_num\":\"" + job_require_num
-				+ "\", \"job_require_time\":\"" + job_require_time + "\", \"company_type\":\"" + company_type
-				+ "\", \"company_num\":\"" + company_num + "\", \"company_field\":\"" + company_field
-				+ "\", \"company_img\":\"" + company_img + "\", \"company_info\":\"" + company_info + "\"}";
+		return "{\"id\":\"" + id + "\", \"city\":\"" + city + "\", \"job_type\":\"" + job_type
+				+ "\", \"job_position\":\"" + job_position + "\", \"job_company\":\"" + job_company
+				+ "\", \"job_salary\":\"" + job_salary + "\", \"job_place\":\"" + job_place + "\", \"job_require\":\""
+				+ job_require + "\", \"job_require_exp\":\"" + job_require_exp + "\", \"job_require_degree\":\""
+				+ job_require_degree + "\", \"job_require_num\":\"" + job_require_num + "\", \"job_require_time\":\""
+				+ job_require_time + "\", \"company_type\":\"" + company_type + "\", \"company_num\":\"" + company_num
+				+ "\", \"company_field\":\"" + company_field + "\", \"company_img\":\"" + company_img
+				+ "\", \"company_info\":\"" + company_info + "\"}";
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getJob_require() {
+		return job_require;
+	}
+	public void setJob_require(String job_require) {
+		this.job_require = job_require;
 	}
 	
 }

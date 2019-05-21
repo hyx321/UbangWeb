@@ -18,14 +18,14 @@ function updated(ID) {
 			$('#userNickname').val(inf.nickname);
 			$('#userSex').val(inf.sex);
 			$('#userPhone').val(inf.phone);
-			$('#userPwd').val(inf.password);
+			$('#userPwd').val('123456');
 		
 			$('#deleteUserNum').val(inf.id);
 			$('#deletUserName').val(inf.name);
 			$('#deleteUserNickname').val(inf.nickname);
 			$('#deleteUserSex').val(inf.sex);
 			$('#deleteUserPhone').val(inf.phone);
-			$('#deleteUserPwd').val(inf.password);
+			$('#deleteUserPwd').val('*******');
 			
 		},
 		 error: function(XMLHttpRequest, textStatus, errorThrown) {

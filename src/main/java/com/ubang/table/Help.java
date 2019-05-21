@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class Help {
-	 private String help_content;
+	private String help_content;
     private String help_taskId;
     private String help_phone;
     private String help_startPosition;
@@ -20,9 +20,7 @@ public class Help {
     private String accept_phone;
     private String accert_position;
     private String isNormal;
-    
-    
-    
+       
 	@Override
 	public String toString() {
 		return "{\"help_content\":\"" + help_content + "\", \"help_taskId\":\"" + help_taskId + "\", \"help_phone\":\""

@@ -18,23 +18,16 @@
 							</div>
 						<!-- 密码栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">银行</label>
+								<label for="lastname" class="col-sm-2 control-label">手机号</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="addCustomerBank" id="addCustomerBank" placeholder="请输入银行账号">
 								</div>
 							</div>
 						<!-- 电话栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">电话</label>
+								<label for="lastname" class="col-sm-2 control-label">密码</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="addCustomerTele" id="addCustomerTele" placeholder="请输入电话">
-								</div>
-							</div>
-						<!-- 地址栏 -->
-							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">地址</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="addCustomerAdd" id="addCustomerAdd" placeholder="请输入地址">
 								</div>
 							</div>
 						</form>

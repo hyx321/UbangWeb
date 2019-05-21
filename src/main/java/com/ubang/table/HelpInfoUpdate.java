@@ -3,6 +3,7 @@ package com.ubang.table;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -16,13 +17,15 @@ public class HelpInfoUpdate {
     private double end_position_lng;
     private String create_time;
     private String type;
-    private int status;
+    private String status;
     private int has_picture;
     private int has_rule;
     private int is_urgent;
     private int helper;
     private double helper_position;
-    
+	private String avatar;
+	private String nickname;
+	private List<picture_url> pisList;
     
 	public int getId() {
 		return id;
@@ -55,10 +58,10 @@ public class HelpInfoUpdate {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public int getHas_rule() {
@@ -93,7 +96,8 @@ public class HelpInfoUpdate {
 				+ end_position_lng + "\", \"create_time\":\"" + create_time + "\", \"type\":\"" + type
 				+ "\", \"status\":\"" + status + "\", \"has_picture\":\"" + has_picture + "\", \"has_rule\":\""
 				+ has_rule + "\", \"is_urgent\":\"" + is_urgent + "\", \"helper\":\"" + helper
-				+ "\", \"helper_position\":\"" + helper_position + "\"}";
+				+ "\", \"helper_position\":\"" + helper_position + "\", \"avatar\":\"" + avatar + "\", \"nickname\":\""
+				+ nickname + "\", \"pisList\":\"" + pisList + "\"}";
 	}
 	public double getStart_position_lat() {
 		return start_position_lat;
@@ -124,6 +128,24 @@ public class HelpInfoUpdate {
 	}
 	public void setHas_picture(int has_picture) {
 		this.has_picture = has_picture;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public List<picture_url> getPisList() {
+		return pisList;
+	}
+	public void setPisList(List<picture_url> pisList) {
+		this.pisList = pisList;
 	}
 	
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>WebSocket</title>
+    <script type="text/javascript" src="Jquery/jquery-3.2.1.min.js"></script>
+    <style>
+        #m-canvas {
+            margin: auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var WS_URL = "ws://localhost:8080/ubang/RemindOthers/";
+        var ws = null;
+        $(function () {
+            ws = new WebSocket(WS_URL + "{\"id\":\"222\"}");
+            ws.onopen = function (evt) {
+                $("#section").text(evt.type);
+            }
+            ws.onmessage = function (evt) {
+                $("#section").append(
+                    '<div class="msg">' + evt.data + '</div>');
+            }
+            ws.onclose = function (evt) {
+                $("#section").text(evt.reason);
+            }
+            ws.onerror = function (evt) {
+                $("#section").text(evt.type);
+            }
+            $("#inputMsg").blur(function () {
+                var data = {
+                    "msg": $("#inputMsg").val(),
+                    "from": {
+                        "id": "222"
+                 
+                    },
+                    "to": $("#to").is(":checked") === true ? "111" : null
+                };
+                ws.send(JSON.stringify(data));
+            });
+            function circle(x, y, radius, color) {
+                context.fillStyle = color;
+                context.beginPath();
+                context.arc(x, y, radius, 0, 2 * Math.PI);
+                context.fill();
+            }
+            function animate() {
+                var x1 = canvas.width/2+80*Math.sin(counter/Math.PI/4);
+                var y1 = canvas.height/2+80*Math.cos(counter/Math.PI/4);
+                var x2 = canvas.width/2+80*Math.sin(counter/Math.PI/4 + Math.PI);
+                var y2 = canvas.height/2+80*Math.cos(counter/Math.PI/4 + Math.PI);
+                circle(x1, y1, 80, 'rgb(0,0,0)');
+                circle(x2, y2, 80, 'rgb(232, 232, 232)');
+                circle(x1, y1, 10, 'rgb(232, 232, 232)');
+                circle(x2, y2, 10, 'rgb(0,0,0)');
+                counter++;
+                window.requestAnimationFrame(animate);
+            }
+            var canvas = document.getElementById("m-canvas");
+            var context = canvas.getContext('2d');
+            var counter = 0;
+            window.requestAnimationFrame(animate);
+        })
+    </script>
+</head>
+
+<body>
+    <canvas id="m-canvas" width="400" height="400"></canvas>
+    <input type="text" id="inputMsg">
+    <input type="checkbox" id="to" value="111">
+    <div id="section"></div>
+</body>
+
+</html>

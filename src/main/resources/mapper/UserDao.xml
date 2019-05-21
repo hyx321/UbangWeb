@@ -127,4 +127,88 @@
 					#{avatar})
 	</insert>
 	
+	<insert
+		id="AddManagerAdmin"
+		parameterType="com.ubang.table.Administor">
+			insert into  
+				ubang_administor(
+					name,
+					phone,
+					password,
+					who_create)
+			values(
+					#{name},
+					#{phone},
+					#{password},
+					#{who_create})
+	</insert>
+	
+		
+	<update
+		id="UpdateManagerAdmin"
+		parameterType="com.ubang.table.Administor">
+			update 
+				ubang_administor
+			set 
+				name = #{name},
+				phone = #{phone},
+				password = #{password},
+				who_create = #{who_create}
+			where 
+				id = #{id}
+	</update>
+	
+	<select 
+		id="GetAllManagerAdmin"
+		resultType="com.ubang.table.Administor">
+			select 
+				* 
+			from 
+				ubang_administor
+	</select>
+	
+	<select 
+		id="GetManagerAdmin"
+		parameterType="int"
+		resultType="com.ubang.table.Administor">
+			select 
+				* 
+			from 
+				ubang_administor
+			where 
+				id = #{ID}
+	</select>
+	
+	
+	<insert
+		id="PostFeedBack"
+		parameterType="com.ubang.table.FeedBack">
+			insert into  
+				ubang_feedback(
+					name,
+					type,
+					content,
+					time,
+					status)
+			values(
+					#{name},
+					#{type},
+					#{content},
+					#{time},
+					#{status})
+	</insert>
+	
+	<update
+		id="PostAvatar"
+		parameterType="com.ubang.table.User">
+			update 
+				ubang_user
+			set 
+				avatar = #{avatar}
+		
+			where 
+				id = #{id}
+	</update>
+	
+	
 </mapper>

@@ -15,7 +15,7 @@
 	<body>
 		<!-- 标题 -->
 		<div class="title">
-			<h1 class="text-center">U帮管理系统</h1>
+			<h3 class="text-center">U帮管理系统</h3>
 		</div>
 		<div class="contain col-md-12">
 			<div class="table-responsive col-md-12"><!-- 表格响应式 -->
@@ -23,18 +23,24 @@
 				<!-- 导航 -->
 					<ul class="nav nav-tabs">
 						<li>
-							<a href="/warehouseBeta/Stock/StockList">资讯信息</a>
+							<a href="/ubang/News/GetAllNewsAdmin">资讯信息</a>
 						</li>
+						
 						<li class="dropdown active">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#1">
-								用户信息 
+								用户信息 <span class="caret"></span>
 							</a>
+							<ul class="dropdown-menu">
+									
+									 <li><a href="/ubang/User/GetAllManagerAdmin">管理员信息</a></li>
+							</ul>
 						</li>
 						
 						<li>
-								<a href="/ubang/SeekHelp/SeekHelpList" >求助信息</a>
+								<a href="/ubang/SeekHelp/GetSeekHelpListAdmin" >求助信息</a>
 						</li>
 					</ul>
+					
 					<!-- 导航内容 -->
 					<div class="tab-content">
 							<div class="tab-pane active " id="1">
@@ -63,7 +69,7 @@
 											<td>${item.name}</td>
 											<td>${item.phone}</td>
 											<td>${item.sex}</td>
-											<td>${item.password}</td>
+											<td>*********</td>
 											<td><button class="btn " onclick="updated(${item.id})" data-toggle="modal" data-target="#updateModal">修改</button></td>
 											<td><button class="btn " onclick="updated(${item.id})" data-toggle="modal" data-target="#deleteModal">删除</button></td>
 										</tr>

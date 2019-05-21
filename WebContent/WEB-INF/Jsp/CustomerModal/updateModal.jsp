@@ -20,28 +20,28 @@
 							<div class="form-group">
 								<label for="lastname" class="col-sm-2 control-label">姓名</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control"  name="CustomerName" id="CustomerName" placeholder="请输入姓名">
+									<input type="text" class="form-control"  name="CustomerName" id="CustomerName" readonly="true" placeholder="请输入姓名">
 								</div>
 							</div>
 						<!-- 密码栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">银行</label>
+								<label for="lastname" class="col-sm-2 control-label">手机号</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="CustomerBank" id="CustomerBank" placeholder="请输入银行账号">
+									<input type="text" class="form-control" name="CustomerBank" id="CustomerBank" readonly="true" placeholder="请输入银行账号">
 								</div>
 							</div>
 						<!-- 电话栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">电话</label>
+								<label for="lastname" class="col-sm-2 control-label">密码</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="CustomerTele" id="CustomerTele" placeholder="请输入电话">
+									<input type="text" class="form-control" name="CustomerTele" id="CustomerTele" readonly="true" placeholder="请输入电话">
 								</div>
 							</div>
 						<!-- 电话栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">地址</label>
+								<label for="lastname" class="col-sm-2 control-label">创建人</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="CustomerAdd" id="CustomerAdd" placeholder="请输入地址">
+									<input type="text" class="form-control" name="CustomerAdd" id="CustomerAdd" readonly="true" placeholder="请输入地址">
 								</div>
 							</div>
 						</form>

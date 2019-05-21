@@ -17,7 +17,7 @@
 	<body>
 		<!-- 标题 -->
 		<div class="title">
-			<h1 class="text-center">企业进销存系统</h1>
+			<h3 class="text-center">U帮管理系统</h3>
 		</div>
 		<div class="contain col-md-12">
 			<div class="table-responsive col-md-12"><!-- 表格响应式 -->
@@ -25,7 +25,7 @@
 				<!-- 导航 -->
 					<ul class="nav nav-tabs">
 						<li>					
-							<a href="/warehouseBeta/Stock/StockList">仓库信息</a>
+							<a href="/ubang/News/GetAllNewsAdmin">资讯信息</a>
 						</li>
 						<!-- <li class="active">
 							<a href="#1" data-toggle="tab">账户信息</a>
@@ -33,17 +33,16 @@
 						
 						<li class="dropdown active">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#1">
-								客户信息 <span class="caret"></span>
+								管理员信息 <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
-									
-									 <li><a href="/warehouseBeta/Staff/StaffList">员工信息</a></li>
+									 <li><a href="/ubang/User/GetAllUsersAdmin">用户信息</a></li>
 							</ul>
 						</li>
 						
 						<li>
 							<!-- <a href="http://119.23.232.90:8080/warehouseBeta/Transaction/TransactionList" >销售信息</a> -->
-							 <a href="/warehouseBeta/Transaction/TransactionList" >销售信息</a> 
+							 <a href="/ubang/SeekHelp/GetSeekHelpListAdmin" >求助信息</a> 
 						</li>
 					</ul>
 					<!-- 导航内容 -->
@@ -58,23 +57,29 @@
 									<tr>
 										<th class="text-center">ID</th>
 										<th class="text-center">姓名</th>
-										<th class="text-center">银行</th>
-										<th class="text-center">电话</th>
-										<th class="text-center">地址</th>
-										<th class="text-center">修改</th>
-										<th class="text-center">删除</th>
+										<th class="text-center">手机号</th>
+										<th class="text-center">创建人</th>
+										
+										<c:if test="${sessionScope.root == '1'}">
+											<th class="text-center">重置密码</th>
+											<th class="text-center">删除</th>
+										</c:if>					
+									
 									</tr>
 								</thead>
-								<c:forEach items="${itemlist}" var="item">
+								<c:forEach items="${managers}" var="item">
 									<tbody>
 										<tr class="text-center">
 											<td>${item.id}</td>
-											<td class="success" onclick=getSale("${item.name}");  data-toggle="modal" data-target="#SaleModal">${item.name}</td>
-											<td>${item.bank}</td>
-											<td>${item.telephone}</td>
-											<td>${item.address}</td>						
-											<td><button class="btn " onclick="updated(${item.id})" data-toggle="modal" data-target="#updateModal">修改</button></td>
-											<td><button class="btn " onclick="updated(${item.id})" data-toggle="modal" data-target="#deleteModal">删除</button></td>
+											<td>${item.name}</td>
+											<td>${item.phone}</td>			
+											<td>${item.who_create}</td>		
+											
+											<c:if test="${sessionScope.root == '1'}">
+												<td><button class="btn " onclick="updated(${item.id})" data-toggle="modal" data-target="#updateModal">重置密码</button></td>
+												<td><button class="btn " onclick="updated(${item.id})" data-toggle="modal" data-target="#updateModal">删除</button></td>
+											</c:if>	
+											
 										</tr>
 									</tbody>
 								</c:forEach>

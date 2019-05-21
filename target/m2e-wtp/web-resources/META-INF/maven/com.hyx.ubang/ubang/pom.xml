@@ -205,6 +205,13 @@
 		<classifier>jdk15</classifier>
 		<version>2.2.3</version>
 	</dependency>
+	
+	<dependency>
+	  <groupId>org.java-websocket</groupId>
+	  <artifactId>Java-WebSocket</artifactId>
+	  <version>1.4.0</version>
+	</dependency>
+
 </dependencies>
   
 

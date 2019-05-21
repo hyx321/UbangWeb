@@ -1,12 +1,15 @@
 package com.ubang.service.imp;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -15,6 +18,7 @@ import com.ubang.dao.UserDao;
 import com.ubang.service.JobService;
 import com.ubang.service.UserService;
 import com.ubang.table.Administor;
+import com.ubang.table.FeedBack;
 import com.ubang.table.Job;
 import com.ubang.table.JobInfo;
 import com.ubang.table.JobInfoUpdate;
@@ -88,7 +92,7 @@ public class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public void CheckLogin(String name, String password,HttpServletResponse response) {
+	public void CheckLogin(HttpSession session,String name, String password,HttpServletResponse response) {
 		
 		try {
 			Administor administor = new Administor();
@@ -97,7 +101,10 @@ public class UserServiceImp implements UserService{
 			administor.setPhone(name);
 			List<Administor> administors = userDao.CheckLogin(administor);
 			if(administors.size() == 1) {
+				session.setAttribute("name",administors.get(0).getName());
+				session.setAttribute("root",administors.get(0).getRoot());
 				response.sendRedirect("/ubang/User/GetAllUsersAdmin");
+			
 			}else {
 				response.sendRedirect("/ubang/index.jsp");
 			}
@@ -105,7 +112,6 @@ public class UserServiceImp implements UserService{
 			// TODO: handle exception
 			e.printStackTrace();
 		} 
-		
 		
 	}
 
@@ -147,5 +153,53 @@ public class UserServiceImp implements UserService{
 		userDao.AddUserAdmin(user);
 	}
 
+	@Override
+	public JSONArray GetAllManagerAdmin() {
+		// TODO Auto-generated method stub
+		List<Administor> users = userDao.GetAllManagerAdmin();
+		JSONArray json = JSON.parseArray(users.toString());
+		
+		return json;
+	}
+
+	@Override
+	public void UpdateManagerAdmin(Administor admin) {
+		// TODO Auto-generated method stub
+		userDao.UpdateManagerAdmin(admin);
+	}
+
+
+	public void AddManagerAdmin(Administor admin,String name) {
+		// TODO Auto-generated method stub
+		admin.setWho_create(name);;
+		userDao.AddManagerAdmin(admin);
+	}
+
+	public JSONArray GetManagerAdmin(int iD) {
+		// TODO Auto-generated method stub
+		List<Administor> users = userDao.GetManagerAdmin(iD);
+		JSONArray json = JSON.parseArray(users.toString());
 	
+		return json;
+	}
+
+	public void PostFeedBack(FeedBack info) {
+		// TODO Auto-generated method stub
+		java.util.Date date = new java.util.Date();          // 获取一个Date对象
+        new Timestamp(date.getTime());
+        info.setTime((new Timestamp(date.getTime()).toLocaleString()));
+        userDao.PostFeedBack(info);
+        
+	}
+
+	public String PostAvatar(String filePath, int helpId) {
+		// TODO Auto-generated method stub
+		
+		User user = new User();
+		user.setAvatar(filePath);
+		user.setId(helpId);
+		userDao.PostAvatar(user);
+		return "1";
+	}
+
 }

@@ -4,7 +4,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">删除用户信息</h4>
+						<h4 class="modal-title" id="myModalLabel">管理员信息</h4>
 					</div>
 					<div class="modal-body">
 						<!-- 修改信息的表单 -->
@@ -25,31 +25,25 @@
 							</div>
 						<!-- 密码栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">银行</label>
+								<label for="lastname" class="col-sm-2 control-label">手机号</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="deleteCustomerBank" id="deleteCustomerBank" readonly="true" placeholder="请输入银行账号">
 								</div>
 							</div>
 						<!-- 电话栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">电话</label>
+								<label for="lastname" class="col-sm-2 control-label">密码</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="deleteCustomerTele" id="deleteCustomerTele" readonly="true" placeholder="请输入电话">
 								</div>
 							</div>
-						<!-- 电话栏 -->
-							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">地址</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="deleteCustomerAdd" id="deleteCustomerAdd" readonly="true" placeholder="请输入地址">
-								</div>
-							</div>
+				
 						</form>
 					</div>
 					<!-- 按钮 -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="update" onclick="DeleteCustomer()">删除</button>
+						<button type="button" class="btn btn-primary" id="update" onclick="UpdateCustomer()">删除</button>
 					</div>
 				</div>		
 			</div>

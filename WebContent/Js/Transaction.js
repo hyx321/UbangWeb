@@ -1,31 +1,31 @@
 //交易记录的表格
-var TransactionListUrl = "/warehouseBeta/Transaction/TransactionList";
+var TransactionListUrl = "/ubang/User/GetAllManagerAdmin";
 
 //将选中的那一行的所有信息赋值到 modal 中
 function updated(ID) {
 	$.ajax({
-		url:"/warehouseBeta/Transaction/GetTransaction",
+		url:"/ubang/SeekHelp/GetHelpInfoAdmin",
 		type:'POST',
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data:{	
-			ID:ID
+			id:ID
 		},
  
 		success:function(meg){
-			var inf = JSON.parse(meg)[0];
+			var inf = JSON.parse(meg);
 			$('#TranNum').val(ID);
-			$('#TranName').val(inf.name);
-			$('#TranMoney').val(inf.money);
-			$('#TranCount').val(inf.count);
-			$('#TranDate').val(inf.date);
-			$('#TranOpe').val(inf.operator);	
+			$('#TranName').val(inf.status);
+			$('#TranMoney').val(inf.name);
+			$('#TranCount').val(inf.type);
+			$('#TranDate').val(inf.content);
+			$('#TranOpe').val(inf.create_time);	
 			
 			$('#deleteTranNum').val(ID);
-			$('#deleteTranName').val(inf.name);
-			$('#deleteTranMoney').val(inf.money);
-			$('#deleteTranCount').val(inf.count);
-			$('#deleteTranDate').val(inf.date);
-			$('#deleteTranOpe').val(inf.operator);
+			$('#deleteTranName').val(inf.status);
+			$('#deleteTranMoney').val(inf.name);
+			$('#deleteTranCount').val(inf.type);
+			$('#deleteTranDate').val(inf.content);
+			$('#deleteTranOpe').val(inf.create_time);
 			
 		},
 		 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -37,15 +37,83 @@ function updated(ID) {
 	
 }
 
+//将选中的那一行的所有信息赋值到 modal 中
+function show(ID) {
+	$.ajax({
+		url:"/ubang/SeekHelp/GetSeekHelpAdmin",
+		type:'POST',
+		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+		data:{	
+			id:ID
+		},
+ 
+		success:function(meg){
+			var inf = JSON.parse(meg);
+			$('#recourse').val(inf.resourse);
+			$('#type').val(inf.type);
+			$('#recourse_create_time').val(inf.recourse_create_time);
+			$('#content').val(inf.content);
+			$('#helper').val(inf.helper);
+			$('#helper_create_time').val(inf.helper_create_time);	
+			$('#helper_end_time').val(inf.helper_end_time);
+			$('#rating').val(inf.rating);
+			$('#description').val(inf.description);	
+		},
+		 error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+	});
+	
+}
+
+function showHelping(ID) {
+	$.ajax({
+		url:"/ubang/SeekHelp/GetSeekHelpAdmin",
+		type:'POST',
+		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+		data:{	
+			id:ID
+		},
+ 
+		success:function(meg){
+			var inf = JSON.parse(meg);
+			$('#recourse_helping').val(inf.resourse);
+			$('#type_helping').val(inf.type);
+			$('#recourse_create_time_helping').val(inf.recourse_create_time);
+			$('#content_helping').val(inf.content);
+			$('#helper_helping').val(inf.helper);
+			$('#helper_create_time_helping').val(inf.helper_create_time);	
+		},
+		 error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+	});
+	
+}
+
+function sort(ID) {
+	if(ID == '全部'){
+		location.replace("/ubang/SeekHelp/GetSeekHelpListAdmin");
+	}else{
+		window.location.href="/ubang/SeekHelp/SortHelpListAdmin?type="+ID;
+//		location.replace("/ubang/SeekHelp/SortHelpListAdmin?type="+ID);
+	}
+
+}
+
 //删除员工的信息
 function DeleteTran() {
 	var workerNum = document.getElementById("deleteTranNum").value;	
 	$.ajax({
-		url:"/warehouseBeta/Transaction/DeleteTransaction",
+		url:"/ubang/SeekHelp/DeleteSeekHelpListAdmin",
 		type:'POST',
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data:{
-			ID:workerNum
+			id:workerNum
 		},
  
 		success:function(meg){

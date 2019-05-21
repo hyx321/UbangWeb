@@ -3,8 +3,10 @@ package com.ubang.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ubang.table.Administor;
 import com.ubang.table.AlarmContent;
+import com.ubang.table.FeedBack;
 import com.ubang.table.Job;
 import com.ubang.table.JobInfo;
 import com.ubang.table.JobInfoUpdate;
@@ -32,4 +34,15 @@ public interface UserDao {
 
 	void AddUserAdmin(User user);
 	
+	List<Administor> GetAllManagerAdmin();
+
+	void UpdateManagerAdmin(Administor admin);
+
+	void AddManagerAdmin(Administor admin);
+	
+	List<Administor> GetManagerAdmin(int iD);
+	 
+	void PostFeedBack(FeedBack feedBack);
+	
+	void PostAvatar(User user);
 }

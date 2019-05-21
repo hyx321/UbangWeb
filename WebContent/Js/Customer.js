@@ -1,10 +1,10 @@
 //客户表格路径
-var CustomerListUrl = "/warehouseBeta/Customer/CustomerList";
+var CustomerListUrl = "/ubang/User/GetAllManagerAdmin";
 //将选中的那一行的 ID 信息赋值到 modal 中的 id 上
 function updated(ID) {
 
 	$.ajax({
-		url:"/warehouseBeta/Customer/GetCustomer",
+		url:"/ubang/User/GetManagerAdmin",
 		type:'POST',
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data:{	
@@ -12,13 +12,13 @@ function updated(ID) {
 		},
  
 		success:function(meg){
-			var inf = JSON.parse(meg)[0];
+			var inf = JSON.parse(meg);		
 			
 			$('#CustomerNum').val(ID);
 			$('#CustomerName').val(inf.name);
-			$('#CustomerBank').val(inf.bank);
-			$('#CustomerTele').val(inf.telephone);
-			$('#CustomerAdd').val(inf.address);
+			$('#CustomerBank').val(inf.password);
+			$('#CustomerTele').val("123456");
+			$('#CustomerAdd').val(inf.who_create);
 
 			$('#deleteCustomerNum').val(ID);
 			$('#deleteCustomerName').val(inf.name);
@@ -64,17 +64,17 @@ function UpdateCustomer(){
 	var workerName = document.getElementById("CustomerName").value;
 	var workerBank = document.getElementById("CustomerBank").value;
 	var workerTele = document.getElementById("CustomerTele").value;
-	var workerAdd = document.getElementById("CustomerAdd").value;
+	var who_create = document.getElementById("CustomerAdd").value;
 	$.ajax({
-		url:"/warehouseBeta/Customer/UpdateCustomer",
+		url:"/ubang/User/UpdateManagerAdmin",
 		type:'POST',
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data:{
 			id:workerNum,
 			name:workerName,
-			bank:workerBank,
-			telephone:workerTele,
-			address:workerAdd
+			phone:workerBank,
+			password:workerTele,
+			who_create:who_create
 		},
 		success:function(meg){
 			location.replace(CustomerListUrl);		
@@ -93,17 +93,14 @@ function AddCustomer(){
 	var workerName = document.getElementById("addCustomerName").value;
 	var workerBank = document.getElementById("addCustomerBank").value;
 	var workerTele = document.getElementById("addCustomerTele").value;
-	var workerAdd = document.getElementById("addCustomerAdd").value;
-	/*alert(workerName+""+workerPwd+""+workerTele+""+workerAdd);*/
 	$.ajax({
-		url:"/warehouseBeta/Customer/AddCustomer",
+		url:"/ubang/User/AddManagerAdmin",
 		type:'POST',
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data:{
 			name:workerName,
-			bank:workerBank,
-			telephone:workerTele,
-			address:workerAdd
+			phone:workerBank,
+			password:workerTele,
 		},
  
 		success:function(meg){

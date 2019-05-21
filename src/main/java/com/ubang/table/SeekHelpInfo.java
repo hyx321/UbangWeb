@@ -3,6 +3,7 @@ package com.ubang.table;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -21,7 +22,7 @@ public class SeekHelpInfo {
     private int is_urgent;
 	private String avatar;
 	private String nickname;
-	
+	private List<picture_url> pisList;
     
 	public int getId() {
 		return id;
@@ -75,7 +76,8 @@ public class SeekHelpInfo {
 				+ start_position_lng + "\", \"end_position_lat\":\"" + end_position_lat + "\", \"end_position_lng\":\""
 				+ end_position_lng + "\", \"create_time\":\"" + create_time + "\", \"type\":\"" + type
 				+ "\", \"has_picture\":\"" + has_picture + "\", \"has_rule\":\"" + has_rule + "\", \"is_urgent\":\""
-				+ is_urgent + "\", \"avatar\":\"" + avatar + "\", \"nickname\":\"" + nickname + "\"}";
+				+ is_urgent + "\", \"avatar\":\"" + avatar + "\", \"nickname\":\"" + nickname + "\", \"pisList\":\""
+				+ pisList + "\"}";
 	}
 	public double getStart_position_lat() {
 		return start_position_lat;
@@ -118,6 +120,12 @@ public class SeekHelpInfo {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public List<picture_url> getPisList() {
+		return pisList;
+	}
+	public void setPisList(List<picture_url> pisList) {
+		this.pisList = pisList;
 	}
 	
 }

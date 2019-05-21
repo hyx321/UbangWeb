@@ -25,22 +25,126 @@
 	<select 
 		id="helpList"
 		parameterType="com.ubang.table.HelpInfoFilter"
-		resultType="com.ubang.table.Help"> 
+		resultType="com.ubang.table.SeekHelpInfo"> 
 			select 
 				*
 			from 
-				Help
-			where 
-				1=1
+				ubang_help_infomation a
+			INNER JOIN 
+				ubang_user b 
+			on
+				b.id = a.recourse and 1=1 and a.status = '未开始' and a.recourse != #{space}
 				<if test='helpTypeList.length >0 '>
 					and 
-					 isNormal in (${helpTypeList})	
+					 a.is_urgent in (${helpTypeList})	
 	        	</if>
 	        	<if test="helpSortList.length>0">
 		        	and 
-		        	help_type in ($helpSortList})	
+		        	a.type in (${helpSortList})	
 	        	</if>
-				<!-- #{start},#{space}  -->
+	       
+				ORDER BY create_time DESC LIMIT #{start},10
+	</select>
+
+	 <resultMap id="getHelpInfo" type="com.ubang.table.HelpDetailInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="helper_id" property="helper_id" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="has_picture" property="has_picture" jdbcType="INTEGER"/>
+        <result column="start_position_lng" property="start_position_lng" jdbcType="DOUBLE"/>
+        <result column="start_position_lat" property="start_position_lat" jdbcType="DOUBLE"/>
+        <result column="end_position_lat" property="end_position_lat" jdbcType="DOUBLE"/>
+        <result column="end_position_lng" property="end_position_lng" jdbcType="DOUBLE"/>
+        <result column="create_time" property="create_time" jdbcType="VARCHAR"/>
+        <result column="end_time" property="end_time" jdbcType="VARCHAR"/>
+        <result column="publish_time" property="publish_time" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="rating" property="rating" jdbcType="INTEGER"/>
+        <result column="helper_position_lat" property="helper_position_lat" jdbcType="DOUBLE"/>
+        <result column="helper_position_lng" property="helper_position_lng" jdbcType="DOUBLE"/>
+    </resultMap>
+    
+	<select 
+		id="GetHelpInfo"
+		parameterType="int"
+		resultMap="getHelpInfo"> 
+			SELECT
+				aa.nickname as name,
+				aa.create_time as create_time,
+				aa.helper_id as helper_id,
+				content as content,
+				type as type,	
+				a.id as id,
+				a.create_time as publish_time,
+				a.has_picture as has_picture,
+				aa.avatar as avatar,
+				a.start_position_lat as start_position_lat,
+				a.start_position_lng as start_position_lng,
+				a.end_position_lat as end_position_lat,
+				a.end_position_lng as end_position_lng,
+				aa.end_time,
+				aa.description as description,
+				aa.rating as rating,
+				aa.position_lat as helper_position_lat,
+				aa.position_lng as helper_position_lng
+			FROM
+				ubang_help_infomation a 
+			INNER JOIN 
+				ubang_user b 
+			 on
+				b.id = a.recourse and a.id = #{id}
+			
+			LEFT JOIN (
+				SELECT
+						a.helper_id,
+						b.nickname,
+						a.create_time,
+						a.help_id,
+						b.avatar,
+						a.end_time,
+						a.rating,
+						a.description,
+						a.position_lat,
+						a.position_lng
+				FROM
+						ubang_helper_information a
+				INNER JOIN 
+					ubang_user b 
+				ON 
+					b.id = a.helper_id
+			) aa 
+				ON 
+				aa.help_id = a.id 
+			
+	</select>
+	
+	<select 
+		id="GetUnHelpInfo"
+		parameterType="int"
+		resultMap="getHelpInfo"> 
+		
+		SELECT
+				b.nickname as name,
+				a.create_time as create_time,
+				content as content,
+				type as type,	
+				a.id as id,
+				a.create_time as publish_time,
+				a.has_picture as has_picture,
+				b.avatar as avatar,
+				a.start_position_lat as start_position_lat,
+				a.start_position_lng as start_position_lng,
+				a.end_position_lat as end_position_lat,
+				a.end_position_lng as end_position_lng
+			FROM
+				ubang_help_infomation a 
+			INNER JOIN 
+				ubang_user b 
+			 on
+				b.id = a.recourse and a.id = #{id}
+		
 	</select>
 	
 	<select 
@@ -101,9 +205,11 @@
 	</insert>
 	
 	 <resultMap id="titleMapForUser" type="com.ubang.table.HelpInfoUpdate">
-        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="INTEGER"/>      
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
         <result column="recourse" property="recourse" jdbcType="INTEGER"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
         <result column="has_picture" property="has_picture" jdbcType="INTEGER"/>
         <result column="start_position_lng" property="start_position_lng" jdbcType="DOUBLE"/>
         <result column="start_position_lat" property="start_position_lat" jdbcType="DOUBLE"/>
@@ -113,6 +219,7 @@
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="has_rule" property="has_rule" jdbcType="INTEGER"/>
+        
         <result column="is_urgent" property="is_urgent" jdbcType="INTEGER"/>
     </resultMap>
     
@@ -126,10 +233,32 @@
 				ubang_help_infomation
 			where 
 				recourse = #{userID} 
-				<if test = 'status != 3'>
+				<if test = "status != '全部'">
 					and status = #{status}
 				</if>
+				ORDER BY create_time DESC
+				
 	</select>
+	
+	<select 
+		id="GetMyHelp"
+		parameterType="com.ubang.table.PersonSeekHelp"
+		resultMap="titleMapForUser"> 
+		SELECT
+			*
+		FROM
+			ubang_help_infomation a 
+		INNER JOIN 
+			ubang_helper_information b 
+		 on
+			a.id = b.help_id and b.helper_id = #{userID}  and status = #{status}
+		LEFT JOIN 
+			ubang_user c
+		on 
+			c.id = a.recourse ORDER BY b.create_time DESC
+			
+	</select>
+	
 	
 	
 	 <resultMap id="helpInfo" type="com.ubang.table.SeekHelpInfo">
@@ -160,8 +289,368 @@
 			INNER JOIN 
 				ubang_user
 			where 
-				recourse != #{userID} and recourse = ubang_user.id and status = #{status}
+				recourse != #{userID} and recourse = ubang_user.id and status = #{status} ORDER BY create_time DESC
 				
 	</select>
 	
+	 <resultMap id="helpBaseInfo" type="com.ubang.table.HelpBaseInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_time" property="create_time" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="is_urgent" property="is_urgent" jdbcType="INTEGER"/>
+    </resultMap>
+	
+	<select 
+		id="GetSeekHelpListAdmin"
+		resultMap="helpBaseInfo"> 
+			select 
+				*
+			from 
+				ubang_help_infomation
+			INNER JOIN 
+				ubang_user
+			WHERE
+				recourse = ubang_user.id
+			
+	</select>
+	
+	<select 
+		id="GetHelpInfoAdmin"
+		resultMap="helpBaseInfo"> 
+			select 
+				*
+			from 
+				ubang_help_infomation
+			INNER JOIN 
+				ubang_user
+			WHERE
+				recourse = ubang_user.id and ubang_help_infomation.id = #{id}
+	</select>
+	
+	<delete
+		id="DeleteSeekHelpListAdmin"
+		parameterType="int">
+			delete 
+			from 
+				ubang_help_infomation
+			where 
+				id = #{id}
+	</delete>
+	
+	<resultMap id="getHelpBaseInfo" type="com.ubang.table.GetHelpBaseInfo">
+        <result column="resourse" property="resourse" jdbcType="VARCHAR"/>
+        <result column="helper" property="helper" jdbcType="VARCHAR"/>
+        <result column="recourse_create_time" property="recourse_create_time" jdbcType="VARCHAR"/>
+        <result column="helper_create_time" property="helper_create_time" jdbcType="VARCHAR"/>
+        <result column="helper_end_time" property="helper_end_time" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="rating" property="rating" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="is_urgent" property="is_urgent" jdbcType="INTEGER"/>
+    </resultMap>
+    
+	<select 
+		id="GetSeekHelpAdmin"
+		parameterType="int"
+		resultMap="getHelpBaseInfo"> 
+			SELECT
+				b.name as resourse,
+				aa.name as helper,
+				a.create_time as recourse_create_time,	
+				aa.create_time as helper_create_time,
+				aa.end_time as helper_end_time,
+				content as content,
+				type as type,	
+				aa.rating as rating,
+				aa.description as description,
+				is_urgent as is_urgent
+			FROM
+					ubang_help_infomation a 
+			INNER JOIN 
+					ubang_user b 
+			 on
+					b.id = a.recourse and a.`status` != '未开始' and a.id = #{id}
+			
+			LEFT JOIN (
+					SELECT
+							a.helper_id,
+							b.name,
+							a.create_time,
+							a.end_time,
+							a.help_id,
+							a.rating,
+							a.description
+					FROM
+							ubang_helper_information a
+					INNER JOIN 
+						ubang_user b 
+					ON 
+						b.id = a.helper_id
+			) aa 
+					ON 
+				aa.help_id = a.id 
+	</select>
+	
+	<select 
+		id="SortHelpListAdmin"
+		parameterType = "java.lang.String"
+		resultMap="helpBaseInfo"> 
+			select 
+				*
+			from 
+				ubang_help_infomation
+			INNER JOIN 
+				ubang_user
+			WHERE
+				recourse = ubang_user.id 
+				and status = #{type}
+				
+	</select>
+
+	<update id="PostRating"
+		parameterType="com.ubang.table.HelpDetailInfo"> 
+		  update
+				ubang_helper_information
+			SET  
+				rating = #{rating}, description = #{description}
+			where
+				help_id = #{id}
+	</update>
+	
+	<delete
+		id="DeleteHelp"
+		parameterType="int">
+			delete 
+			from 
+				ubang_help_infomation
+			where 
+				id = #{id}  and status = '未开始'
+	</delete>
+	
+	
+	<select 
+		id="GetHelpPic"
+		parameterType = "int"
+		resultType="com.ubang.table.picture_url"> 
+			select 
+				*
+			from 
+				ubang_picture_url
+			WHERE
+				help_id = #{id} 
+	</select>
+	
+	<select 
+		id="JudgeHelpStatus"
+		parameterType = "int"
+		resultType="java.lang.String"> 
+			select 
+				status
+			from 
+				ubang_help_infomation
+			WHERE
+				id = #{id} 
+	</select>
+	
+	<update id="ModifyHelpContent"
+		parameterType="com.ubang.table.HelpInfoUpdate"> 
+		  update
+				ubang_help_infomation
+			SET  
+				content = #{content}, has_picture = #{has_picture}
+			where
+				id = #{id}
+	</update>
+
+	
+	<update id="ModifiHelpStatus"
+		parameterType="int"> 
+		  update
+				ubang_help_infomation
+			SET  
+				status ='进行中'
+			where
+				id = #{id}
+	</update>
+	
+	
+	<insert id="saveMultPicture"
+		parameterType="com.ubang.table.picture_url"> 
+		    insert into 
+		      ubang_picture_url(help_id,picture)
+			values
+				(#{id},#{url})
+	</insert>
+	
+	<insert id="GetHelp"
+		parameterType="com.ubang.table.HelpInfomation"> 
+		    insert into 
+		      ubang_helper_information(help_id,helper_id,position_lat,position_lng,create_time)
+			values
+				(#{help_id},#{helper_id},#{position_lat},#{position_lng},str_to_date(#{create_time},'%Y-%m-%d %H:%i:%s'))
+	</insert>
+	
+	<insert id="PostCharMessage"
+		parameterType="com.ubang.table.ChatMessage"> 	
+		    insert into 
+		      ubang_chat_record(message_id,resourse,send,time,help_id,content,pic_url,recieve)
+			values
+				(
+				#{message_id},
+				#{resourse},
+				#{send},
+				str_to_date(#{time},'%Y-%m-%d %H:%i:%s'),
+				#{help_id},
+				#{content},
+				#{pic_url},
+				#{recieve})
+	</insert>
+	
+	<insert id="PostCharMessagePic"
+		parameterType="com.ubang.table.ChatMessage"> 	
+		    insert into 
+		      ubang_chat_record(message_id,resourse,send,time,help_id,content,pic_url,recieve)
+			values
+				(
+				#{message_id},
+				#{resourse},
+				#{send},
+				str_to_date(#{time},'%Y-%m-%d %H:%i:%s'),
+				#{help_id},
+				#{content},
+				#{pic_url},
+				#{recieve})
+	</insert>
+	
+	<select id="getChatMessage"
+		parameterType = "int"
+		resultType="com.ubang.table.ChatMessage"> 	
+		   SELECT
+				b.nickname as resourse_name,
+				aa.nickname as helper_name,
+				a.resourse as resourse,
+				a.send as send,
+				a.pic_url as pic_url,
+				a.time as time,
+				a.position_lat as position_lat,
+				a.position_lng as position_lng,
+				a.help_id as help_id,
+				a.recieve as recieve,
+				b.avatar as resourse_avatar,
+				aa.avatar as helper_avatar,
+				a.content as content
+			FROM
+					ubang_chat_record a 
+			INNER JOIN 
+					ubang_user b 
+			 on
+					b.id = a.resourse and a.message_id = #{id}
+			
+			LEFT JOIN (
+					SELECT
+							b.nickname,
+							a.message_id,
+							b.avatar
+					FROM
+							ubang_chat_record a
+					INNER JOIN 
+						ubang_user b 
+					ON 
+						b.id = a.send
+			) aa 
+				on 
+					aa.message_id =a.message_id
+	</select>
+	
+	<select id="getRecentChatMessage"
+		parameterType = "int"
+		resultType="com.ubang.table.ChatMessage"> 	
+		    SELECT
+				b.nickname as resourse_name,
+				aa.nickname as helper_name,
+				a.resourse as resourse,
+				a.send as send,
+				a.pic_url as pic_url,
+				a.time as time,
+				a.position_lat as position_lat,
+				a.position_lng as position_lng,
+				a.help_id as help_id,
+				a.recieve as recieve,
+				b.avatar as resourse_avatar,
+				aa.avatar as helper_avatar,
+				a.content as content
+			FROM
+					ubang_chat_record a 
+			INNER JOIN 
+					ubang_user b 
+			 on
+					b.id = a.resourse and a.help_id = #{id}  
+			
+			LEFT JOIN (
+					SELECT
+							b.nickname,
+							a.message_id,
+							b.avatar
+					FROM
+							ubang_chat_record a
+					INNER JOIN 
+						ubang_user b 
+					ON 
+						b.id = a.send
+			) aa 
+				on 
+					aa.message_id =a.message_id ORDER BY time DESC LIMIT #{start},10
+	</select>
+	
+	<update
+		id="FinishHelp"
+		parameterType = "int">
+		  update
+				ubang_help_infomation
+			SET  
+				status ='结束'
+			where
+				id = #{id} 
+			
+	</update>
+	
+	<update
+		id="FinishHelper"
+		parameterType = "com.ubang.table.HelpInfomation">
+		  update
+				ubang_helper_information
+			SET  
+				end_time = str_to_date(#{end_time},'%Y-%m-%d %H:%i:%s')
+			where
+				help_id = #{help_id} 
+	</update>
+	
+	
+	<delete
+		id="DeleteHelper"
+		parameterType="int">
+			delete 
+			from 
+				ubang_helper_information
+			where 
+				helper_id = #{helper_id}
+	</delete>
+	
+	<update
+		id="CancelHelp"
+		parameterType = "int">
+		  update
+				ubang_help_infomation
+			SET  
+				status = '未开始'
+			where
+				id = #{id} 
+			
+	</update>
+
+		
 </mapper>

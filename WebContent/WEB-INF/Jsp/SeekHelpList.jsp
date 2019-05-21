@@ -16,7 +16,7 @@
 	<body>
 		<!-- 标题 -->
 		<div class="title">
-			<h1 class="text-center">U帮管理系统</h1>
+			<h3 class="text-center">U帮管理系统</h3>
 		</div>
 		<div class="contain col-md-12">
 			<div class="table-responsive col-md-12"><!-- 表格响应式 -->
@@ -24,11 +24,17 @@
 				<!-- 导航 -->
 					<ul class="nav nav-tabs">
 						<li>
-							<a href="/ubang/News/newsList">资讯信息</a>
+							<a href="/ubang/News/GetAllNewsAdmin">资讯信息</a>
 						</li>			
 						
-						<li>
-							<a href="/ubang/User/UserList">用户信息</a>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">信息
+								 <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/ubang/User/GetAllUsersAdmin">用户信息</a></li>
+								<li><a href="/ubang/User/GetAllManagerAdmin">管理员信息</a></li>
+							</ul>
 						</li>
 						
 						<li class="active">
@@ -42,7 +48,24 @@
 								<!-- 添加栏 -->
 								<div class="col-md-12 column">
 									<nav class="navbar " role="navigation">
-								
+															
+										<form role="form" class="navbar-form navbar-left" >
+											<div class="form-group">
+													<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">进度分类 
+														<span class="caret"></span>
+													</button>
+													<ul class="dropdown-menu" role="menu">		
+														<li><a href="#" onclick="sort('全部')">全部</a></li>
+														<li class="divider"></li>								
+														<li><a href="#" onclick="sort('未开始')">未开始</a></li>
+														<li class="divider"></li>
+														<li><a href="#" onclick="sort('进行中')">进行中</a></li>
+														<li class="divider"></li>
+														<li><a href="#" onclick="sort('结束')">结束</a></li>
+													</ul>
+											</div>
+										
+										</form>
 										
 										<form class="navbar-form navbar-right " role="search">
 											<div class="form-group">
@@ -59,26 +82,39 @@
 								<thead>
 									<tr>
 										<th class="text-center">ID</th>
-										<th class="text-center">名称</th>
-										<th class="text-center">交易数量</th>
-										<th class="text-center">交易金额</th>
-										<th class="text-center">交易日期</th>
-										<th class="text-center">经办人</th>
-										<th class="text-center">修改</th>
+										<th class="text-center">状态</th>
+										<th class="text-center">求助人</th>
+										<th class="text-center">求助类型</th>
+										<th class="text-center">求助内容</th>
+										<th class="text-center">求助时间</th>
 										<th class="text-center">删除</th>
 									</tr>
 								</thead>
-								<c:forEach items="${itemlist}" var="item">
+								<c:forEach items="${seekHelps}" var="item">
 								
-									<tbody>
-										<tr class="text-center">
+									<tbody>				
+										<c:if test="${item.status == '未开始'}">
+											<tr class="text-center warning">
+										</c:if>	
+										
+										<c:if test="${item.status == '进行中'}">
+											<tr class="text-center success" onclick="showHelping(${item.id})" data-toggle="modal" data-target="#helpingModal">
+										</c:if>	 
+										
+										<c:if test="${item.status == '结束'}">
+											<tr class="text-center active" onclick="show(${item.id})" data-toggle="modal" data-target="#updateModal">
+										</c:if>	
 											<td>${item.id}</td>
-											<td class="success" onclick="getCommodity(${item.id})" data-toggle="modal" data-target="#CommodityModal">${item.name}</td>
-											<td>${item.count}</td>
-											<td>${item.money}</td>
-											<td>${item.date}</td>
-											<td>${item.operator}</td>		
-											<td><button class="btn " onclick="updated(${item.id})" data-toggle="modal" data-target="#updateModal">修改</button></td>
+											<c:if test="${item.is_urgent == 1}">
+												<td class="danger">${item.status}</td>
+											</c:if>	
+											<c:if test="${item.is_urgent == 0}">
+												<td>${item.status}</td>
+											</c:if>	
+											<td>${item.name}</td>
+											<td>${item.type}</td>
+											<td>${item.content}</td>
+											<td>${item.create_time}</td>		
 											<td><button class="btn " onclick="updated(${item.id})" data-toggle="modal" data-target="#deleteModal">删除</button></td>
 										</tr>
 									</tbody>
@@ -92,6 +128,7 @@
 		<%@ include file="TransactionModal/CommodityModal.jsp"%>
 		<%@ include file="TransactionModal/updateModal.jsp"%>
 		<%@ include file="TransactionModal/deleteModal.jsp"%>
+		<%@ include file="TransactionModal/helpingModal.jsp"%>
 		<!-- bootstrap的底部jsp -->
 		<%@ include file="comment/bootstrapBottom.jsp"%>
 	</body>

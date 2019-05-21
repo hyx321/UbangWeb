@@ -2,17 +2,17 @@ package com.ubang.table;
 
 public class PersonSeekHelp {
 	private int userID;
-	private int status;
+	private String status;
 	public int getUserID() {
 		return userID;
 	}
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	@Override

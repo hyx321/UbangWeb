@@ -48,7 +48,7 @@
 							<div class="form-group">
 								<label for="lastname" class="col-sm-2 control-label">密码</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="userPwd" id="userPwd" placeholder="请输入密码">
+									<input type="text" class="form-control" name="userPwd" id="userPwd" readonly="true" placeholder="请输入密码">
 								</div>
 							</div>
 							

@@ -18,35 +18,35 @@
 							</div>
 						<!-- 姓名栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">名称</label>
+								<label for="lastname" class="col-sm-2 control-label">状态</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control"  name="deleteTranName" id="deleteTranName" readonly="true" placeholder="请输入商品名称">
 								</div>
 							</div>
 						<!-- 密码栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">交易数量</label>
+								<label for="lastname" class="col-sm-2 control-label">求助人</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="deleteTranCount" id="deleteTranCount" readonly="true" placeholder="请输入商品交易数量">
 								</div>
 							</div>
 						<!-- 电话栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">交易金额</label>
+								<label for="lastname" class="col-sm-2 control-label">求助类型</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="deleteTranMoney" id="deleteTranMoney" readonly="true" placeholder="请输入交易金额">
 								</div>
 							</div>
 						<!-- 电话栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">交易日期</label>
+								<label for="lastname" class="col-sm-2 control-label">求助内容</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="deleteTranDate" id="deleteTranDate" readonly="true" placeholder="请输入商品交易日期">
 								</div>
 							</div>		
 						<!-- 电话栏 -->
 							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">经办人</label>
+								<label for="lastname" class="col-sm-2 control-label">求助时间</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="deleteTranOpe" id="deleteTranOpe" readonly="true" placeholder="请输入商品经办人">
 								</div>
